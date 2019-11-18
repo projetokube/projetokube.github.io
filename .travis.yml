@@ -10,12 +10,13 @@ script:
   - JEKYLL_ENV=production bundle exec jekyll build --destination site
 deploy:
   provider: pages
+  target_branch: master
+  verbose: true
   local_dir: ./site
-  email: reinangabriel1520@gmail.com
-  name: Deployment Bot
-  # skip_cleanup: true
+#  email: reinangabriel1520@gmail.com
+#  name: Deployment Bot
+#  skip_cleanup: true
   github-token: $GITHUB_TOKEN
-  keep_history: true
+#  keep_history: true
   on:
     branch: source
-target-branch: master
