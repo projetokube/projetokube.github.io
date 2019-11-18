@@ -2,21 +2,33 @@ language: ruby
 os: linux
 rvm:
  - 2.6.5
-cache: bundler
+cache:
+  bundler: true
+  # directories:
+  #   - $TRAVIS_BUILD_DIR/tmp/.htmlproofer
 before_install:
-  - gem update --system
   - gem install bundler
+gemfile: Gemfile
 script:
-  - JEKYLL_ENV=production bundle exec jekyll build --destination site
+      JEKYLL_ENV=production bundle exec jekyll build; 
+branches:
+  only:
+    # Change this to gh-pages if you're deploying using the gh-pages branch
+    - source
+    - develop
+    
+sudo: false # route your build to the container-based infrastructure for a faster build
+
 deploy:
   provider: pages
-  target_branch: master
-  verbose: true
-  local_dir: ./site
-#  email: reinangabriel1520@gmail.com
-#  name: Deployment Bot
-#  skip_cleanup: true
-  github-token: $GITHUB_TOKEN
-#  keep_history: true
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep-history: false
+  local_dir: _site
+  # repo: luispuerto/luispuerto.net # in case I wanted to build my page in other repo
+  target-branch: master
   on:
     branch: source
+
+
+
